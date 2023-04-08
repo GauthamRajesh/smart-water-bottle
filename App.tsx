@@ -66,7 +66,7 @@ function HomeScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.rectangle}>
-                {() => <AccountCircleIcon />}
+                {() => <AccountCircleIcon color="primary" />}
             </View>
         </SafeAreaView>
     );

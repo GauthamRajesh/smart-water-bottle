@@ -1,25 +1,36 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-
+import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {
-    Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
+    LineChart
+} from "react-native-chart-kit";
+
 
 const Stack = createNativeStackNavigator();
+
+const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2 // optional
+      }
+    ],
+    legend: ["Rainy Days"] // optional
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false // optional
+  };
 
 const styles = StyleSheet.create({
     button: {
@@ -66,8 +77,22 @@ function HomeScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.rectangle}>
-                {() => <AccountCircleIcon color="primary" />}
             </View>
+            {/* <Icon name="linechart" size={30} color="#900" /> */}
+            {/* react-native link react-native-vector-icons*/}
+
+            {/* <LineChart
+            data={data}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            /> */}
+            <LineChart
+            data={data}
+            width={400}
+            height={320}
+            chartConfig={chartConfig}
+            />
         </SafeAreaView>
     );
 }

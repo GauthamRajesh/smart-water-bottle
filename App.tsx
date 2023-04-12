@@ -4,6 +4,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 //import icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //Don't use MUI, they don't support react-native
+import ConnectScreen from './src/ConnectScreen';
+import ResultsScreen from './src/ResultsScreen';
 
 import {
   Button,
@@ -72,7 +74,7 @@ function HomeScreen({navigation}) {
   );
 }
 
-function ResultsScreen() {
+/*function ResultsScreen() {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#282832'}}>
       <Text
@@ -88,8 +90,20 @@ function ResultsScreen() {
     </SafeAreaView>
   );
 }
+*/
 
 function App() {
+  const [connected, SetConnected] = React.useState(false);
+  const [connectedDevice, setConnectedDevice] = React.useState(null);
+
+  if (!connected) {
+    return (
+      <ConnectScreen
+        setConnected={SetConnected}
+        setConnectedDevice={setConnectedDevice}
+      />
+    );
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -100,7 +114,12 @@ function App() {
         />
         <Stack.Screen
           name="Details"
-          component={ResultsScreen}
+          children={() => (
+            <ResultsScreen
+              connectedDevice={connectedDevice}
+              setConnectedDevice={setConnectedDevice}
+            />
+          )}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

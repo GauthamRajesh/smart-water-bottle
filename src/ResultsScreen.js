@@ -5,10 +5,10 @@ import BleManager from 'react-native-ble-manager';
 const SERVICE_UUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
 const CHARACTERISTIC_UUID = 'beb5483e-36e1-4688-b7f5-ea07361b26a8';
 
-const ResultsScreen = ({connectedDevice, setConnectedDevice}) => {
+const ResultsScreen = ({connectedDevice, setConnectedDevice, PID, setPID}) => {
   const [isScanning, setIsScanning] = useState(false);
   const [devices, setDevices] = useState([]);
-  const [PID, setPID] = useState(null);
+
   useEffect(() => {
     BleManager.start({showAlert: false});
 
@@ -97,6 +97,8 @@ const ResultsScreen = ({connectedDevice, setConnectedDevice}) => {
     serviceUUID,
     characteristicUUID,
   ) => {
+    // Change this code to read in 30 seconds of data
+    // and then return the highest value
     try {
       await BleManager.retrieveServices(peripheralId);
       let message = await BleManager.read(

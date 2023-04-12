@@ -95,12 +95,14 @@ function HomeScreen({navigation}) {
 function App() {
   const [connected, SetConnected] = React.useState(false);
   const [connectedDevice, setConnectedDevice] = React.useState(null);
-
+  const [PID, setPID] = React.useState(null);
   if (!connected) {
     return (
       <ConnectScreen
         setConnected={SetConnected}
         setConnectedDevice={setConnectedDevice}
+        setPID={setPID}
+        PID={PID}
       />
     );
   }
@@ -118,6 +120,8 @@ function App() {
             <ResultsScreen
               connectedDevice={connectedDevice}
               setConnectedDevice={setConnectedDevice}
+              setPID={setPID}
+              PID={PID}
             />
           )}
           options={{headerShown: false}}

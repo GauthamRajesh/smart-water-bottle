@@ -136,7 +136,7 @@ function ChartScreen() {
 */
 
 function App() {
-  const [connected, SetConnected] = React.useState(true);
+  const [connected, SetConnected] = React.useState(false);
   const [connectedDevice, setConnectedDevice] = React.useState(null);
   const [PID, setPID] = React.useState(null);
   //use useEffect to load in the data from async storage

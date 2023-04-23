@@ -9,11 +9,12 @@ const ConnectScreen = ({setConnected, setConnectedDevice, PID, setPID}) => {
   const [isScanning, setIsScanning] = useState(false);
   const [devices, setDevices] = useState([]);
 
+
   useEffect(() => {
     BleManager.start({showAlert: false});
 
     const handleDiscoverPeripheral = device => {
-      console.log('New device:', device.advertising.localName);
+      console.log('New device:', device.advertising);
       if (
         device.advertising.localName != undefined &&
         device.advertising.localName &&
@@ -44,23 +45,17 @@ const ConnectScreen = ({setConnected, setConnectedDevice, PID, setPID}) => {
     );
   }, []);
 
-  const startScan = () => {
-    if (!isScanning) {
-      setIsScanning(true);
-      devices.length = 0;
-      BleManager.scan([], 5, true)
-        .then(() => {
-          console.log('Scanning...');
-        })
-        .catch(err => {
-          console.error(err);
+    const startScan = () => {
+        BleManager.scan([], 5, true).then(() => {
+            console.log('Scanning...');
+            setIsScanning(true);
+        }).catch((error) => {
+        console.log('Error scanning for devices:', error);
         });
-
-      setTimeout(() => {
-        setIsScanning(false);
-      }, 5000);
-    }
-  };
+        setTimeout(() => {
+            setIsScanning(false);
+        }, 5000);
+    };
 
   const connectToDevice = device => {
     BleManager.connect(device.id)

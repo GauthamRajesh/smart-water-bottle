@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ConnectScreen from './src/ConnectScreen';
 import ResultsScreen from './src/ResultsScreen';
 import {LineChart} from 'react-native-chart-kit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Button,
   SafeAreaView,
@@ -21,17 +22,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-      strokeWidth: 2, // optional
-    },
-  ],
-  legend: ['Rainy Days'], // optional
-};
+Icon.loadFont();
 
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
@@ -99,24 +90,56 @@ function HomeScreen({navigation}) {
   );
 }
 
-function ChartScreen() {
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: '#282832',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <LineChart
-        data={data}
-        width={400}
-        height={320}
-        chartConfig={chartConfig}
-      />
-    </SafeAreaView>
-  );
-}
+const getData = async () => {
+    let keys = []
+    try {
+      keys = await AsyncStorage.getAllKeys()
+      console.log(keys);
+      data = await AsyncStorage.multiGet(keys)
+    } catch(e) {
+      console.error(e);
+    }
+    return data;
+};
+
+
+// function ChartScreen() {
+//     let values;
+    
+//     values = getData();
+//     let newData = [];
+//     for(let i = 0; i < values.length; i++) {
+//         newData.push(parseInt(values[i][1]));
+//     }
+//     let data = {
+//         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+//         datasets: [
+//           {
+//             data: [20, 45, 28, 80, 99, 43],
+//             color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+//             strokeWidth: 2, // optional
+//           },
+//         ],
+//         legend: ['Blood Glucose Levels'], // optional
+//     };
+//     console.log(data.datasets[0])
+//     return (
+//         <SafeAreaView
+//             style={{
+//             flex: 1,
+//             backgroundColor: '#282832',
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//             }}>
+//             <LineChart
+//             data={data}
+//             width={400}
+//             height={320}
+//             chartConfig={chartConfig}
+//             />
+//         </SafeAreaView>
+//     );
+// }
 /*function ResultsScreen() {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#282832'}}>
@@ -142,7 +165,7 @@ function App() {
   //use useEffect to load in the data from async storage
   //use the getAllKeys() function to load all of the dates
   //use AsyncStorage.getItem(key) to get the blood glucose reading
-  if (!connected) {
+  if (connected) {
     return (
       <ConnectScreen
         setConnected={SetConnected}

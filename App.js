@@ -8,6 +8,7 @@ import ConnectScreen from './src/ConnectScreen';
 import ResultsScreen from './src/ResultsScreen';
 import {LineChart} from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ChartScreen from './src/ChartScreen';
 import {
   Button,
   SafeAreaView,

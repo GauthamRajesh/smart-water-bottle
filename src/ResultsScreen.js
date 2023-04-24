@@ -68,9 +68,9 @@ const ResultsScreen = ({connectedDevice, setConnectedDevice, PID, setPID}) => {
         } else if (message[0] > thirdHighest && message[1] === 0) {
           thirdHighest = message[0];
         }*/
-        highestValue = 91;
+        highestValue = 99;
 
-        console.log('Read:', floatValue);
+        // console.log('Read:', floatValue);
       } catch (error) {
         console.error('Error reading characteristic:', error);
       }
@@ -81,8 +81,8 @@ const ResultsScreen = ({connectedDevice, setConnectedDevice, PID, setPID}) => {
 
     const saveResult = async (result) => {
         try {
-            const key = new Date();
-            await AsyncStorage.setItem('' + key, JSON.stringify('' + result));
+            const key = new Date().getTime();
+            await AsyncStorage.setItem("" + key, "" + result);
         } catch (error) {
             console.error('Error saving result:', error);
         }
